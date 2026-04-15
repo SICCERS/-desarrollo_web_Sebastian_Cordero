@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de miembros | Calidad de Vida DCC</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/lista-miembros.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>Área de Calidad de Vida DCC</h1>
+
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="Inicio.html">Inicio</a></li>
+        <li><a href="Registro.html">Registro de miembros</a></li>
+        <li><a href="Reporte-actividades.html">Registro de actividades</a></li>
+        <li><a href="Lista-miembros.html">Listado de miembros</a></li>
+        <li><a href="Estadisticas.html">Estadísticas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Listado de miembros y sus actividades</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Tipo de actividad</th>
+            <th>Tipo de miembro</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+
+        <tbody id="tabla-miembros">
+          <tr>
+            <td>Juan</td>
+            <td>Pérez Soto</td>
+            <td>Deportiva</td>
+            <td>Estudiante de pregrado</td>
+            <td>912345678</td>
+            <td>juan.perez@correo.cl</td>
+            <td>
+              <details>
+                <summary>Ver descripción</summary>
+                <p>Participa en fútbol recreativo los lunes.</p>
+              </details>
+            </td>
+          </tr>
+
+          <tr>
+            <td>María</td>
+            <td>González Rojas</td>
+            <td>Cultural</td>
+            <td>Estudiante de postgrado</td>
+            <td>923456789</td>
+            <td>maria.gonzalez@correo.cl</td>
+            <td>
+              <details>
+                <summary>Ver descripción</summary>
+                <p>Asiste a talleres de teatro universitario.</p>
+              </details>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Diego</td>
+            <td>Fernández Díaz</td>
+            <td>Científica</td>
+            <td>Académico/a</td>
+            <td>934567890</td>
+            <td>diego.fernandez@correo.cl</td>
+            <td>
+              <details>
+                <summary>Ver descripción</summary>
+                <p>Participa en seminarios de investigación aplicada.</p>
+              </details>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Camila</td>
+            <td>Torres Vega</td>
+            <td>Social</td>
+            <td>Funcionario/a</td>
+            <td>945678901</td>
+            <td>camila.torres@correo.cl</td>
+            <td>
+              <details>
+                <summary>Ver descripción</summary>
+                <p>Organiza actividades de integración institucional.</p>
+              </details>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Andrés</td>
+            <td>Muñoz Herrera</td>
+            <td>Deportiva</td>
+            <td>Estudiante de pregrado</td>
+            <td>956789012</td>
+            <td>andres.munoz@correo.cl</td>
+            <td>
+              <details>
+                <summary>Ver descripción</summary>
+                <p>Entrena básquetbol universitario.</p>
+              </details>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Valentina</td>
+            <td>Rivas Soto</td>
+            <td>Cultural</td>
+            <td>Estudiante de postgrado</td>
+            <td>967890123</td>
+            <td>valentina.rivas@correo.cl</td>
+            <td>
+              <details>
+                <summary>Ver descripción</summary>
+                <p>Participa en grupo de música folclórica.</p>
+              </details>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Tomás</td>
+            <td>López Carrasco</td>
+            <td>Social</td>
+            <td>Funcionario/a</td>
+            <td>978901234</td>
+            <td>tomas.lopez@correo.cl</td>
+            <td>
+              <details>
+                <summary>Ver descripción</summary>
+                <p>Apoya actividades de bienestar estudiantil.</p>
+              </details>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagina">
+        <button id="prev">←</button>
+        <span id="pagina">1</span>
+        <button id="next">→</button>
+      </div>
+
+    </section>
+  </main>
+</body>
+</html>
