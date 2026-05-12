@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de miembros | Calidad de Vida DCC</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="{{ url_for('static', filename='js/registro-miembros.js') }}" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>Área de Calidad de Vida DCC</h1>
+
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registro') }}">Registro de miembros</a></li>
+        <li><a href="{{ url_for('registro_actividades') }}">Registro de actividades</a></li>
+        <li><a href="{{ url_for('lista_miembros') }}">Listado de miembros</a></li>
+        <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Listado de miembros y sus actividades</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Comuna</th>
+            <th>Región</th>
+            <th>Tipo de actividad</th>
+            <th>Tipo de miembro</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+
+        <tbody id="tabla-miembros">
+          {% for miembro in miembros %}
+          <tr>
+            <td>{{ miembro.nombre.split(' ')[0] }}</td>
+            <td>{{ miembro.nombre.split(' ')[1:] | join(' ') }}</td>
+            
+            <td>{{ miembro.comuna.nombre }}</td>
+            <td>{{ miembro.comuna.region.nombre }}</td>
+            
+            <td>
+              {% if miembro.actividades %}
+                {{ miembro.actividades[-1].tipo | capitalize }}
+              {% else %}
+                Sin actividad
+              {% endif %}
+            </td>
+            
+            <td>Miembro Registrado</td>
+            
+            <td>{{ miembro.telefono }}</td>
+            <td>{{ miembro.email }}</td>
+            <td>
+            <details>
+                <summary>Ver descripción</summary>
+                {% if miembro.actividades %}
+                  {% set ultima_act = miembro.actividades[-1] %}
+                  <p><strong>Descripción:</strong> {{ ultima_act.descripcion or 'Sin descripción.' }}</p>
+                  <p><strong>Día:</strong> {{ ultima_act.dia | capitalize }}</p>
+                  <p><strong>Horario:</strong> {{ ultima_act.hora_inicio }}</p>
+                  <p><strong>Duración:</strong> {{ ultima_act.duracion }} hrs</p>
+                  
+                  {% if ultima_act.fotos %}
+                    {% set foto = ultima_act.fotos[0] %}
+                    <div class="archivo-contenedor">
+                      <p class="archivo-titulo">Archivo adjunto:</p>
+                      
+                      {% if foto.nombre_archivo.endswith('.pdf') %}
+                        <a href="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}" target="_blank" class="archivo-enlace">
+                          Ver documento PDF
+                        </a>
+                      {% else %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}" 
+                             alt="Archivo de la actividad" 
+                             class="archivo-imagen">
+                      {% endif %}
+                    </div>
+                  {% endif %}
+                  
+                {% else %}
+                  <p>Este usuario aún no ha registrado actividades.</p>
+                {% endif %}
+              </details>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% if not miembros %}
+          <tr>
+            <td colspan="9" style="text-align: center; padding: 20px;">No hay miembros registrados aún.</td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+
+      <div class="pagina">
+        <button id="prev">←</button>
+        <span id="pagina">1</span>
+        <button id="next">→</button>
+      </div>
+
+    </section>
+  </main>
+</body>
+</html>
