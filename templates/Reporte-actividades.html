@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de actividades | Calidad de Vida DCC</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="{{ url_for('static', filename='js/registro-actividades.js') }}" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>Área de Calidad de Vida DCC</h1>
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registro') }}">Registro de miembros</a></li>
+        <li><a href="{{ url_for('registro_actividades') }}">Registro de actividades</a></li>
+        <li><a href="{{ url_for('lista_miembros') }}">Listado de miembros</a></li>
+        <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Registro de actividades</h2>
+
+      <form id="registro-actividad"action="{{ url_for('registro_actividades') }}"method="POST"enctype="multipart/form-data" novalidate>
+        <fieldset class="datos">
+           <select id="categoria" name="categoria" required>
+             <option value="">Seleccione una opción</option>
+             <option value="arte">Arte</option>
+             <option value="deporte">Deporte</option>
+             <option value="tecnología">Tecnología</option>
+             <option value="social">Social</option>
+             <option value="recreación">Recreación</option>
+             <option value="otra">Otra</option>
+           </select>
+          <span id="error-categoria" class="error">Debe seleccionar una categoría.</span>
+        </fieldset>
+
+        <fieldset class="datos">
+        
+          <legend>Día en que realiza la actividad *</legend>
+          <select id="dia" name="dia" required>
+            <option value="">Seleccione un día</option>
+            <option value="lunes">Lunes</option>
+            <option value="martes">Martes</option> 
+            <option value="miércoles">Miércoles</option>
+            <option value="jueves">Jueves</option>
+            <option value="viernes">Viernes</option>
+            <option value="sábado">Sábado</option>
+            <option value="domingo">Domingo</option>
+          </select>
+          <span id="error-dias" class="error">
+            Debe seleccionar un día.
+          </span>
+        </fieldset>
+
+        <fieldset class="datos">
+          <legend>Horario *</legend>
+          <div class="datos">
+            <label for="hora-inicio">Hora de inicio *</label>
+            <input type="time" id="hora-inicio" name="hora-inicio" min="08:00" max="23:00" required>
+          </div>
+
+          <div class="datos">
+            <label for="hora-fin">Hora de fin *</label>
+            <input type="time" id="hora-fin" name="hora-fin" min="08:00" max="23:00" required>
+            <span id="error-horario" class="error">Horario inválido (inicio debe ser menor que fin).</span>
+          </div>
+        </fieldset>
+
+        <fieldset class="datos">
+          <legend>Descripción *</legend>
+          <textarea id="descripcion" name="descripcion" minlength="20" maxlength="150" required></textarea>
+          <span id="error-descripcion" class="error">Debe tener entre 20 y 150 caracteres.</span>
+        </fieldset>
+
+        <fieldset class="datos">
+          <legend>Archivo de respaldo *</legend>
+          <label for="archivo">Subir archivo (PDF o imagen)</label>
+          <input type="file" id="archivo" name="archivo" accept=".pdf,.png,.jpg,.jpeg" required>
+          <span id="error-archivo" class="error">Debe subir un archivo válido. </span>
+        </fieldset>
+
+        <fieldset class="datos">
+          <legend>Enlace relacionado a la actividad *</legend>
+          <label for="enlace">URL (video, publicación, etc.)</label>
+          <input type="url" id="enlace" name="enlace" placeholder="https://..." required>
+          <span id="error-enlace" class="error">Debe ingresar un enlace válido.</span>
+        </fieldset>
+
+        <p class="datos">
+          <button type="submit">Registrar actividad</button>
+        </p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
