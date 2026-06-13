@@ -35,6 +35,27 @@ const errorTelefonoFormato = document.getElementById("error-telefono-formato");
 
 const errorFecha = document.getElementById("error-fecha");
 
+const campSemestre = document.getElementById("campo-semestre");
+const campCargo = document.getElementById("campo-cargo");
+const campAcademico = document.getElementById("campo-academico");
+const errorInfoExtra1 = document.getElementById("error-info-extra-1");
+const errorInfoExtra2 = document.getElementById("error-info-extra-2");
+const errorInfoExtra3 = document.getElementById("error-info-extra-3");
+
+inputTipoMiembro.addEventListener("change", function () {
+  campSemestre.style.display = "none";
+  campCargo.style.display = "none";
+  campAcademico.style.display = "none";
+  const tipo = inputTipoMiembro.value;
+  if (tipo === "pregrado" || tipo === "postgrado") {
+    campSemestre.style.display = "block";
+  } else if (tipo === "funcionario") {
+    campCargo.style.display = "block";
+  } else if (tipo === "academico") {
+    campAcademico.style.display = "block";
+  }
+});
+
 formulario.addEventListener("submit", function (evento) {
   evento.preventDefault(); // buscamos  que la página no se recargue al apretar el boton de enviar 
 // rescata los valores de las referencias guardadas y quitamos espacios iniciales y finales de los input 
@@ -107,12 +128,34 @@ if (apellidos === "") {
   }
 }
 
-// dado que que estos parametros son de seleccion solo necesitamos chequear que no esten vacios
+
 errorTipoMiembro.classList.remove("visible")
 if (tipoMiembro=== "") {errorTipoMiembro.classList.add("visible")
    valido= false
 }
-
+errorInfoExtra1.classList.remove("visible");
+errorInfoExtra2.classList.remove("visible");
+errorInfoExtra3.classList.remove("visible");
+if (tipoMiembro === "pregrado" || tipoMiembro === "postgrado") {
+  const semestre = document.querySelector("#campo-semestre input").value;
+  if (semestre === "" || semestre < 1 || semestre > 12) {
+    errorInfoExtra1.classList.add("visible");
+    valido = false;
+  }
+} else if (tipoMiembro === "funcionario") {
+  const cargo = document.querySelector("#campo-cargo input").value.trim();
+  if (cargo === "") {
+    errorInfoExtra2.classList.add("visible");
+    valido = false;
+  }
+} else if (tipoMiembro === "academico") {
+  const curso = document.querySelector("#campo-academico input").value.trim();
+  if (curso === "") {
+    errorInfoExtra3.classList.add("visible");
+    valido = false;
+  }
+}
+// dado que que estos parametros son de seleccion solo necesitamos chequear que no esten vacios
 errorTipoDocumento.classList.remove("visible")
 if (tipoDocumento=== ""){errorTipoDocumento.classList.add("visible");
   valido= false ;
@@ -156,7 +199,7 @@ if (correo === "") {
 errorTelefonoFormato.classList.remove("visible");
 
 if (telefono !== "") { // solo se validara si es que se  escribió algo
-  if (!/^\d{9}$/.test(telefono)) {  // solo permite numeros y a lo mas 9 
+  if (!/^9\d{8}$/.test(telefono)){  // solo permite numeros y a lo mas 9 
     errorTelefonoFormato.classList.add("visible");
     valido = false;
   }

@@ -84,13 +84,12 @@
           <p class="datos">
             <label for="telefono">Teléfono (opcional)</label>
             <input type="tel" id="telefono" name="telefono">
-            <span id="error-telefono-formato" class="error">Debe tener 8 dígitos numéricos.</span>
+            <span id="error-telefono-formato" class="error">Debe tener 9 dígitos  (comenzar con 9).</span>
           </p>
         </fieldset>
 
         <fieldset>
           <legend>Tipo de miembro</legend>
-
           <p class="datos">
             <label for="tipo-miembro">Seleccione una categoría *</label>
             <select id="tipo-miembro" name="tipo-miembro">
@@ -100,7 +99,25 @@
               <option value="funcionario">Funcionario/a</option>
               <option value="academico">Académico/a</option>
             </select>
-            <span id="error-tipo-miembro" class="error">Debe seleccionar una opcion.</span>
+            <span id="error-tipo-miembro" class="error">Debe seleccionar una opción.</span>
+          </p>
+        
+          <p class="datos" id="campo-semestre" style="display:none;">
+            <label>Semestre actual *</label>
+            <input type="number" name="info-extra" min="1" max="12">
+            <span id="error-info-extra-1" class="error">Debe ingresar su semestre.</span>
+          </p>
+        
+          <p class="datos" id="campo-cargo" style="display:none;">
+            <label>Cargo *</label>
+            <input type="text" name="info-extra">
+            <span id="error-info-extra-2" class="error">Debe ingresar su cargo.</span>
+          </p>
+        
+          <p class="datos" id="campo-academico" style="display:none;">
+            <label>Que curso realiza *</label>
+            <input type="text" name="info-extra">
+            <span id="error-info-extra-3" class="error">Debe ingresar el curso que realiza.</span>
           </p>
         </fieldset>
 

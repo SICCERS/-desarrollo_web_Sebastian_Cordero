@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de miembros | Calidad de Vida DCC</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <script src="{{ url_for('static', filename='js/registro-miembros.js') }}" defer></script>
 </head>
 
 <body>
   <header>
     <h1>Área de Calidad de Vida DCC</h1>
-
     <nav aria-label="Navegación principal">
       <ul>
         <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
@@ -26,6 +24,28 @@
   <main>
     <section>
       <h2>Listado de miembros y sus actividades</h2>
+
+      <div class="datos">
+        <form method="GET" action="{{ url_for('lista_miembros') }}">
+          <label for="filtro-tipo">Filtrar por tipo de miembro:</label>
+          <select id="filtro-tipo" name="tipo">
+            <option value="">Todos</option>
+            <option value="pregrado"    {% if tipo == "pregrado"    %}selected{% endif %}>Pregrado</option>
+            <option value="postgrado"   {% if tipo == "postgrado"   %}selected{% endif %}>Postgrado</option>
+            <option value="funcionario" {% if tipo == "funcionario" %}selected{% endif %}>Funcionario/a</option>
+            <option value="academico"   {% if tipo == "academico"   %}selected{% endif %}>Académico/a</option>
+          </select>
+
+          <label for="filtro-orden">Ordenar por:</label>
+          <select id="filtro-orden" name="orden">
+            <option value="fecha_registro" {% if orden == "fecha_registro" %}selected{% endif %}>Fecha de registro</option>
+            <option value="nombre"         {% if orden == "nombre"         %}selected{% endif %}>Nombre</option>
+          </select>
+
+          <button type="submit">Aplicar</button>
+        </form>
+      </div>
+
       <table>
         <thead>
           <tr>
@@ -45,11 +65,11 @@
           {% for miembro in miembros %}
           <tr>
             <td>{{ miembro.nombre.split(' ')[0] }}</td>
-            <td>{{ miembro.nombre.split(' ')[1:] | join(' ') }}</td>
-            
+            <td>{{ miembro.nombre.split(' ', 1)[1] if ' ' in miembro.nombre else '' }}</td>
+
             <td>{{ miembro.comuna.nombre }}</td>
             <td>{{ miembro.comuna.region.nombre }}</td>
-            
+
             <td>
               {% if miembro.actividades %}
                 {{ miembro.actividades[-1].tipo | capitalize }}
@@ -57,13 +77,13 @@
                 Sin actividad
               {% endif %}
             </td>
-            
-            <td>Miembro Registrado</td>
-            
+
+            <td>{{ miembro.tipo_miembro | capitalize if miembro.tipo_miembro else 'No especificado' }}</td>
+
             <td>{{ miembro.telefono }}</td>
             <td>{{ miembro.email }}</td>
             <td>
-            <details>
+              <details>
                 <summary>Ver descripción</summary>
                 {% if miembro.actividades %}
                   {% set ultima_act = miembro.actividades[-1] %}
@@ -71,24 +91,30 @@
                   <p><strong>Día:</strong> {{ ultima_act.dia | capitalize }}</p>
                   <p><strong>Horario:</strong> {{ ultima_act.hora_inicio }}</p>
                   <p><strong>Duración:</strong> {{ ultima_act.duracion }} hrs</p>
-                  
+
                   {% if ultima_act.fotos %}
-                    {% set foto = ultima_act.fotos[0] %}
-                    <div class="archivo-contenedor">
-                      <p class="archivo-titulo">Archivo adjunto:</p>
-                      
-                      {% if foto.nombre_archivo.endswith('.pdf') %}
-                        <a href="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}" target="_blank" class="archivo-enlace">
-                          Ver documento PDF
-                        </a>
-                      {% else %}
-                        <img src="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}" 
-                             alt="Archivo de la actividad" 
-                             class="archivo-imagen">
-                      {% endif %}
-                    </div>
+                    {% for foto in ultima_act.fotos %}
+                      <div class="archivo-contenedor">
+                        <p class="archivo-titulo">Archivo adjunto:</p>
+                        {% if foto.nombre_archivo.endswith('.pdf') %}
+                          <a href="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}" target="_blank" class="archivo-enlace">
+                            Ver documento PDF
+                          </a>
+                        {% else %}
+                          <img src="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}"
+                               alt="Archivo de la actividad"
+                               class="archivo-imagen">
+                        {% endif %}
+                      </div>
+                    {% endfor %}
                   {% endif %}
-                  
+
+                  <p class="datos">
+                    <a href="{{ url_for('detalle_actividad', actividad_id=ultima_act.id) }}" class="archivo-enlace">
+                      Ver detalle y comentarios →
+                    </a>
+                  </p>
+
                 {% else %}
                   <p>Este usuario aún no ha registrado actividades.</p>
                 {% endif %}
@@ -106,9 +132,19 @@
       </table>
 
       <div class="pagina">
-        <button id="prev">←</button>
-        <span id="pagina">1</span>
-        <button id="next">→</button>
+        {% if pagina > 1 %}
+          <a href="{{ url_for('lista_miembros', page=pagina-1, orden=orden, tipo=tipo) }}">
+            <button>←</button>
+          </a>
+        {% endif %}
+
+        <span>{{ pagina }} / {{ total_paginas }}</span>
+
+        {% if pagina < total_paginas %}
+          <a href="{{ url_for('lista_miembros', page=pagina+1, orden=orden, tipo=tipo) }}">
+            <button>→</button>
+          </a>
+        {% endif %}
       </div>
 
     </section>

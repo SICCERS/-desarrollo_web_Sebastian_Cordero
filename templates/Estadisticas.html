@@ -2,14 +2,17 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estadísticas | Calidad de Vida DCC</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.pie.min.js"></script>
 </head>
 
 <body>
   <header>
     <h1>Área de Calidad de Vida DCC</h1>
-
     <nav>
       <ul>
         <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
@@ -24,18 +27,28 @@
   <main>
     <section>
       <h2>Estadísticas</h2>
+      <p>Visualización general de los datos.</p>
 
-      <p>
-        Visualización general datos recopilados.
-      </p>
-
-      <div class="graficos">
-        <img src="{{ url_for('static', filename='svg/grafico1.png') }}" alt="Participación por tipo de miembro" class="grafico-img">
-        <img src="{{ url_for('static', filename='svg/grafico2.png') }}" alt="Horas dedicadas a actividades" class="grafico-img">
-        <img src="{{ url_for('static', filename='svg/grafico3.png') }}" alt="Distribución de actividades" class="grafico-img">
+      <div class="grafico-bloque">
+        <h3>Miembros registrados por día</h3>
+        <p id="estado-grafico1" class="grafico-cargando">Cargando datos.</p>
+        <div id="grafico1" class="grafico-canvas"></div>
       </div>
-
+      <div class="grafico-bloque">
+        <h3>Actividades por tipo</h3>
+        <p id="estado-grafico2" class="grafico-cargando">Cargando datos.</p>
+        <div id="grafico2" class="grafico-canvas"></div>
+      </div>
+      <div class="grafico-bloque">
+        <h3>Actividades por comuna</h3>
+        <p id="estado-grafico3" class="grafico-cargando">Cargando datos.</p>
+        <div id="grafico3" class="grafico-canvas"></div>
+      </div>
+      
+      <a href="{{ url_for('inicio') }}" class="volver">← Volver a la portada</a>
     </section>
   </main>
+
+  <script src="{{ url_for('static', filename='js/estadisticas.js') }}"></script>
 </body>
 </html>

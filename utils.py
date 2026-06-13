@@ -1,12 +1,11 @@
 from werkzeug.utils import secure_filename
 from datetime import datetime
-
 import hashlib
 import filetype
 import os
 
 
-UPLOAD_FOLDER = "static/uploads"
+upload_folder  = "static/uploads"
 
 
 def generar_nombre_archivo(nombre_original):
@@ -21,8 +20,8 @@ def guardar_archivo(archivo):
     if not archivo or archivo.filename == "":
         return None, None
     nombre_archivo = generar_nombre_archivo(archivo.filename)
-    os.makedirs(UPLOAD_FOLDER,exist_ok=True)
-    ruta_archivo = os.path.join(UPLOAD_FOLDER,nombre_archivo)
+    os.makedirs(upload_folder ,exist_ok=True)
+    ruta_archivo = os.path.join(upload_folder ,nombre_archivo)
     archivo.save(ruta_archivo)
     tipo_archivo = filetype.guess(ruta_archivo)
     if tipo_archivo is None:

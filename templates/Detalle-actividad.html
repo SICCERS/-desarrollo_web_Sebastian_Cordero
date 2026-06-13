@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle actividad | Calidad de Vida DCC</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+  <header>
+    <h1>Área de Calidad de Vida DCC</h1>
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registro') }}">Registro de miembros</a></li>
+        <li><a href="{{ url_for('registro_actividades') }}">Registro de actividades</a></li>
+        <li><a href="{{ url_for('lista_miembros') }}">Listado de miembros</a></li>
+        <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="detalle-seccion" data-actividad-id="{{ actividad.id }}">
+      <h2>Detalle de la actividad</h2>
+
+      <table class="detalle-tabla">
+        <tbody>
+          <tr>
+            <th>Nombre</th>
+            <td>{{ actividad.nombre }}</td>
+          </tr>
+          <tr>
+            <th>Tipo</th>
+            <td>{{ actividad.tipo | capitalize }}</td>
+          </tr>
+          <tr>
+            <th>Día</th>
+            <td>{{ actividad.dia | capitalize }}</td>
+          </tr>
+          <tr>
+            <th>Hora de inicio</th>
+            <td>{{ actividad.hora_inicio }}</td>
+          </tr>
+          <tr>
+            <th>Duración</th>
+            <td>{{ actividad.duracion }} hrs</td>
+          </tr>
+          <tr>
+            <th>Descripción</th>
+            <td>{{ actividad.descripcion or 'Sin descripción.' }}</td>
+          </tr>
+          <tr>
+            <th>Miembro</th>
+            <td>{{ actividad.miembro.nombre }}</td>
+          </tr>
+          <tr>
+            <th>Comuna</th>
+            <td>{{ actividad.miembro.comuna.nombre }}</td>
+          </tr>
+        </tbody>
+      </table>
+      {% if actividad.fotos %}
+      <div class="detalle-fotos">
+        <h3>Archivos adjuntos</h3>
+        {% for foto in actividad.fotos %}
+          <div class="archivo-contenedor">
+            <p class="archivo-titulo">{{ foto.nombre_archivo }}</p>
+            {% if foto.nombre_archivo.endswith('.pdf') %}
+              <a href="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}"
+                 target="_blank" class="archivo-enlace">
+                Ver documento PDF
+              </a>
+            {% else %}
+              <img src="{{ url_for('static', filename='uploads/' ~ foto.nombre_archivo) }}"
+                   alt="Archivo de la actividad"
+                   class="archivo-imagen">
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </section>
+
+    <section class="comentario-seccion">
+      <h2>Agregar comentario</h2>
+      <div class="datos">
+        <label for="comentario-nombre">Nombre</label>
+        <input type="text" id="comentario-nombre" name="nombre"
+               minlength="3" maxlength="80"
+               placeholder="Tu nombre (mínimo 3 caracteres)">
+        <p id="error-nombre" class="error"></p>
+      </div>
+      <div class="datos">
+        <label for="comentario-texto">Comentario</label>
+        <textarea id="comentario-texto" name="texto"
+                  rows="4" cols="50"
+                  minlength="5" maxlength="300"
+                  placeholder="Escribe tu comentario (mínimo 5 caracteres)"></textarea>
+        <p id="error-texto" class="error"></p>
+      </div>
+      <div class="datos">
+        <button type="button" id="btn-comentario">Agregar comentario</button>
+      </div>
+
+      <p id="comentario-exito" class="comentario-exito"></p>
+    </section>
+
+    <section class="comentario-seccion">
+      <h2>Comentarios</h2>
+      <p id="estado-comentarios" class="grafico-cargando">Cargando comentarios</p>
+      <div id="lista-comentarios"></div>
+    </section>
+    <a href="{{ url_for('lista_miembros') }}" class="volver">← Volver al listado</a>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/comentarios.js') }}"></script>
+</body>
+</html>

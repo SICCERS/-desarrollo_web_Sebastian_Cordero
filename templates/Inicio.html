@@ -10,7 +10,15 @@
 <body>
   <header>
     <h1>Área de Calidad de Vida DCC</h1>
-
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+        <li><a href="{{ url_for('registro') }}">Registro de miembros</a></li>
+        <li><a href="{{ url_for('registro_actividades') }}">Registro de actividades</a></li>
+        <li><a href="{{ url_for('lista_miembros') }}">Listado de miembros</a></li>
+        <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+      </ul>
+    </nav>
   </header>
 <main>
   <section>

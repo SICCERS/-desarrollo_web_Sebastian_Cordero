@@ -27,7 +27,7 @@
     <section>
       <h2>Registro de actividades</h2>
 
-      <form id="registro-actividad"action="{{ url_for('registro_actividades') }}"method="POST"enctype="multipart/form-data" novalidate>
+      <form id="registro-actividad" action="{{ url_for('registro_actividades') }}" method="POST" enctype="multipart/form-data" novalidate>
         <fieldset class="datos">
            <select id="categoria" name="categoria" required>
              <option value="">Seleccione una opción</option>
@@ -82,8 +82,8 @@
         <fieldset class="datos">
           <legend>Archivo de respaldo *</legend>
           <label for="archivo">Subir archivo (PDF o imagen)</label>
-          <input type="file" id="archivo" name="archivo" accept=".pdf,.png,.jpg,.jpeg" required>
-          <span id="error-archivo" class="error">Debe subir un archivo válido. </span>
+          <input type="file" id="archivo" name="archivo" accept=".pdf,.png,.jpg,.jpeg" multiple required>
+          <span id="error-archivo" class="error">Debe subir al menos un archivo válido (PDF o imagen de maximo 5 MB por archivo).</span>
         </fieldset>
 
         <fieldset class="datos">
