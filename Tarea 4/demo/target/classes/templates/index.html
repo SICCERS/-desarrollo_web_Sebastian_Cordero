@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador de actividades</title>
+  <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+
+  <div th:replace="~{fragments/comunes :: cabecera}"></div>
+
+  <main>
+    <section>
+      <h2>Buscar actividades</h2>
+
+      <div class="datos">
+        <label for="busqueda">Escribe al menos 3 caracteres</label>
+        <input type="text" id="busqueda" placeholder="nombre, descripción o comuna">
+      </div>
+
+      <p id="estado" class="estado"></p>
+
+      <div id="resultados"></div>
+    </section>
+  </main>
+
+  <script th:src="@{/buscador.js}"></script>
+</body>
+</html>

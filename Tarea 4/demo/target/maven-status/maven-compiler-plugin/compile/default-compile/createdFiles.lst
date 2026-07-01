@@ -1,0 +1,13 @@
+com\tarea4\demo\controller\ApiController.class
+com\tarea4\demo\service\NotaService.class
+com\tarea4\demo\model\Comuna.class
+com\tarea4\demo\model\Actividad.class
+com\tarea4\demo\dto\NotaInput.class
+com\tarea4\demo\dto\ActividadDTO.class
+com\tarea4\demo\repository\NotaRepository.class
+com\tarea4\demo\repository\ActividadRepository.class
+com\tarea4\demo\dto\NotaResumen.class
+com\tarea4\demo\model\Miembro.class
+com\tarea4\demo\model\Nota.class
+com\tarea4\demo\DemoApplication.class
+com\tarea4\demo\service\ActividadService.class
